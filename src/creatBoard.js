@@ -1,4 +1,4 @@
-const createBoard = (row, col, mine) => {
+const createBoard = (row, col, mines) => {
     let board = [];
     for (let x=0; x<row; x++){
         let r = [];
