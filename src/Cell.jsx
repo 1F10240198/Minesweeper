@@ -13,7 +13,7 @@ const Cell = ({details, onUpdateFlag}) => {
     }
     
     return (
-        <div style={cellStyle} onContextMenu={onUpdateFlag}>
+        <div style={cellStyle} onContextMenu={() => onUpdateFlag(event, details.x, details.y)}>
             {getCellDisplay()}
         </div>
     );

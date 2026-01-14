@@ -26,7 +26,7 @@ const Board = ({row, col, mines}) => {
             const newBoard = [...prev.board];
             const newFlag = !newBoard[x][y].flagged;
             let newNumOfMines = prev.numOfMines;
-            newFlag ? newNumOfMines + 1 : newNumOfMines - 1;
+            newFlag ? (newNumOfMines -= 1) : (newNumOfMines += 1);
             newBoard[x][y].flagged = newFlag;
 
             return {
