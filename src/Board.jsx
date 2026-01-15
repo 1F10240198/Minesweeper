@@ -7,22 +7,17 @@ const Board = ({row, col, mines}) => {
     const [resetGame, setResetGame] = useState(true);
 
     useEffect(() => {
-        setResetGame((event) => {
-            if (event) {
-                const newBoard = createBoard(row, col, mines);
-                setGameData({
-                    board: newBoard,
-                    gameStatus: 'Game in Progress',
-                    cellsWithoutMines: row * col - mines,
-                    numOfMines: mines
-                });
-                // console.log(newBoard);
-                // console.log(event);
-                // console.log(resetGame);
-                // setResetGame(false);
-            }
+        if (!resetGame) {return ;}
+
+        const newBoard = createBoard(row, col, mines);
+        setGameData({
+            board: newBoard,
+            gameStatus: 'Game in Progress',
+            cellsWithoutMines: row * col - mines,
+            numOfMines: mines
         });
-    }, [resetGame]);
+        setResetGame(false);
+    }, [resetGame, row, col, mines]);
 
     const handleUpdateFlag = (e, x, y) => {
         e.preventDefault();
