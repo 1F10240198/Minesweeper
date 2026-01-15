@@ -4,17 +4,25 @@ import Cell from "./Cell";
 
 const Board = ({row, col, mines}) => {
     const [gameData, setGameData] = useState({});
+    const [resetGame, setResetGame] = useState(true);
 
     useEffect(() => {
-        const newBoard = createBoard(row, col, mines);
-        console.log(newBoard);
-        setGameData({
-            board: newBoard,
-            gameStatus: 'Game in Progress',
-            cellsWithoutMines: row * col - mines,
-            numOfMines: mines
+        setResetGame((event) => {
+            if (event) {
+                const newBoard = createBoard(row, col, mines);
+                setGameData({
+                    board: newBoard,
+                    gameStatus: 'Game in Progress',
+                    cellsWithoutMines: row * col - mines,
+                    numOfMines: mines
+                });
+                // console.log(newBoard);
+                // console.log(event);
+                // console.log(resetGame);
+                // setResetGame(false);
+            }
         });
-    }, []);
+    }, [resetGame]);
 
     const handleUpdateFlag = (e, x, y) => {
         e.preventDefault();
@@ -93,7 +101,9 @@ const Board = ({row, col, mines}) => {
 
     return(
         <div>
-            <div>残りの地雷数:{gameData.numOfMines}</div>
+            <div>🚩{gameData.numOfMines} &nbsp;&nbsp;
+                <button onClick={()=>{setResetGame(true);}}>Reset</button>
+            </div>
             <div>Game Status:{gameData.gameStatus}</div>
             <div>
                 {gameData.board.map((singleRow, index1) => {
