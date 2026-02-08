@@ -5,6 +5,20 @@ import Cell from "./Cell";
 const Board = ({row, col, mines}) => {
     const [gameData, setGameData] = useState({});
     const [resetGame, setResetGame] = useState(true);
+    const [count, setCount] = useState(0);
+    const [startCount, setStartCount] = useState(false)
+
+    useEffect(() => {
+        let interval;
+        if(!startCount) {return;}
+        interval = setInterval(() => {
+            setCount(prev => prev + 1);
+        }, 1000);
+
+        return () => {
+            clearInterval(interval);
+        }
+    }, [startCount]);
 
     useEffect(() => {
         if (!resetGame) {return ;}
@@ -16,7 +30,11 @@ const Board = ({row, col, mines}) => {
             cellsWithoutMines: row * col - mines,
             numOfMines: mines
         });
+
+        setCount(0);
+        setStartCount(false);
         setResetGame(false);
+        
     }, [resetGame, row, col, mines]);
 
     const handleUpdateFlag = (e, x, y) => {
@@ -41,12 +59,24 @@ const Board = ({row, col, mines}) => {
     }
 
     const handleRevealCell = (x, y) => {
+
         if(gameData.gameStatus === 'You Lost' ||
             gameData.gameStatus === 'You Win') {return ;}
         if(gameData.board[x][y].revealed ||
             gameData.board[x][y].flagged) {return ;}
 
-        const newGameData = {...gameData};
+        // タイマー始動
+        if (!startCount) {
+            setStartCount(true);
+        }
+
+        const newBoard = gameData.board.map(row => 
+            row.map(cell => ({...cell}))
+        );
+        const newGameData = {
+            ...gameData,
+            borad: newBoard
+        };
 
         if(newGameData.board[x][y].value === 'X'){
             //クリックしたマスが地雷だった場合
@@ -59,6 +89,7 @@ const Board = ({row, col, mines}) => {
                 }
             }
             newGameData.gameStatus = 'You Lost';
+            setStartCount(false);
         }else if(newGameData.board[x][y].value === 0) {
             //クリックしたマスの周辺に地雷がない場合
             const newRevealedData = revealEmpty(x, y, newGameData);
@@ -68,18 +99,20 @@ const Board = ({row, col, mines}) => {
             newGameData.cellsWithoutMines--;
             if(newGameData.cellsWithoutMines === 0){
                 newGameData.gameStatus = 'You Win';
+                setStartCount(false);
             }
         }
         setGameData(newGameData);
     }
 
     const revealEmpty = (x, y, data) => {
-        if(data.board[x][y].revealed) {return ;}
+        if(data.board[x][y].revealed || data.borad[x][y].flagged) {return ;}
 
         data.board[x][y].revealed = true;
         data.cellsWithoutMines--;
         if(data.cellsWithoutMines === 0){
             data.gameStatus = 'You Win';
+            setStartCount(false);
         }
 
         if(data.board[x][y].value === 0){
@@ -96,7 +129,7 @@ const Board = ({row, col, mines}) => {
 
     return(
         <div>
-            <div>🚩{gameData.numOfMines} &nbsp;&nbsp;
+            <div>🚩{gameData.numOfMines} &nbsp;&nbsp; ⏱️ {count} &nbsp;&nbsp;
                 <button onClick={()=>{setResetGame(true);}}>Reset</button>
             </div>
             <div>Game Status:{gameData.gameStatus}</div>
