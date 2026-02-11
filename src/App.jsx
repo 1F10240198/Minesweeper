@@ -1,5 +1,6 @@
 import './App.css'
 import Board from './Board'
+import Difficulty from './Difficulty';
 
 const GAME_ROW = 10;
 const GAME_COL = 10;
@@ -16,6 +17,7 @@ function App() {
       <div style={containerStyle}>
         <Board row={GAME_ROW} col={GAME_COL} mines={MINES} />
       </div>
+      <Difficulty />
     </div>
   )
 }
