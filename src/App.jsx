@@ -1,25 +1,28 @@
 import './App.css'
-import Board from './Board'
+// import Board from './Board'
 import Difficulty from './Difficulty';
 
-const GAME_ROW = 10;
-const GAME_COL = 10;
-const MINES = 15;
+// const GAME_ROW = 10;
+// const GAME_COL = 10;
+// const MINES = 15;
 
 function App() {
-  const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center'
-  }
+  // const containerStyle = {
+  //   display: 'flex',
+  //   justifyContent: 'center'
+  // }
+  // return (
+  //   <div className='App'>
+  //     <h2>Minesweeper</h2>
+  //     <div style={containerStyle}>
+  //       <Board row={GAME_ROW} col={GAME_COL} mines={MINES} />
+  //     </div>
+  //     <Difficulty />
+  //   </div>
+  // )
   return (
-    <div className='App'>
-      <h2>Minesweeper</h2>
-      <div style={containerStyle}>
-        <Board row={GAME_ROW} col={GAME_COL} mines={MINES} />
-      </div>
-      <Difficulty />
-    </div>
-  )
+    <Difficulty />
+  );
 }
 
-export default App
+export default App;

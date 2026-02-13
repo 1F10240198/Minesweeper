@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import createBoard from "./creatBoard";
 import Cell from "./Cell";
 
-const Board = ({row, col, mines}) => {
+const Board = ({row, col, mines, onBack}) => {
     const [gameData, setGameData] = useState({});
     const [resetGame, setResetGame] = useState(true);
     const [count, setCount] = useState(0);
@@ -75,7 +75,7 @@ const Board = ({row, col, mines}) => {
         );
         const newGameData = {
             ...gameData,
-            borad: newBoard
+            board: newBoard
         };
 
         if(newGameData.board[x][y].value === 'X'){
@@ -129,6 +129,7 @@ const Board = ({row, col, mines}) => {
 
     return(
         <div>
+            <button onClick={onBack}>難易度選択</button>
             <div>🚩{gameData.numOfMines} &nbsp;&nbsp; ⏱️ {count} &nbsp;&nbsp;
                 <button onClick={()=>{setResetGame(true);}}>Reset</button>
             </div>
