@@ -106,7 +106,8 @@ const Board = ({row, col, mines, onBack}) => {
     }
 
     const revealEmpty = (x, y, data) => {
-        if(data.board[x][y].revealed || data.borad[x][y].flagged) {return ;}
+        if (x < 0 || x >= row || y < 0 || y >= col) {return ;}
+        if(data.board[x][y].revealed || data.board[x][y].flagged) {return ;}
 
         data.board[x][y].revealed = true;
         data.cellsWithoutMines--;
