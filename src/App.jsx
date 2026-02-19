@@ -7,6 +7,10 @@ import Difficulty from './Difficulty';
 // const MINES = 15;
 
 function App() {
+  const containerStyle = {
+        display: 'flex',
+        justifyContent: 'center'
+  }
   // const containerStyle = {
   //   display: 'flex',
   //   justifyContent: 'center'
@@ -21,7 +25,9 @@ function App() {
   //   </div>
   // )
   return (
-    <Difficulty />
+    <div style={containerStyle}>
+      <Difficulty />
+    </div>
   );
 }
 
