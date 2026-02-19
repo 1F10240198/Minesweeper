@@ -131,7 +131,7 @@ const Board = ({row, col, mines, onBack}) => {
     return(
         <div>
             <button onClick={onBack}>難易度選択</button>
-            <div>🚩{gameData.numOfMines} &nbsp;&nbsp; ⏱️ {count} &nbsp;&nbsp;
+            <div>🚩{gameData.numOfMines} &nbsp;&nbsp; ⏱️ {Math.floor(count/60)}:{String(count%60).padStart(2,'0')} &nbsp;&nbsp;
                 <button onClick={()=>{setResetGame(true);}}>Reset</button>
             </div>
             <div>Game Status:{gameData.gameStatus}</div>
